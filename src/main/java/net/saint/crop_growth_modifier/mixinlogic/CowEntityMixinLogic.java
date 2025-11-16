@@ -17,7 +17,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 	// Logic
 
 	public default CowEntityMilkActionResult onInteractMob(CowEntity cowEntity, PlayerEntity player, Hand hand) {
-		if (!Mod.config.cowLimitedMilkProduction) {
+		if (!Mod.CONFIG.cowLimitedMilkProduction) {
 			return CowEntityMilkActionResult.DidNothing;
 		}
 
@@ -31,8 +31,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 		if (player.getStackInHand(hand).isEmpty() && player.isSneaking()) {
 			if (!world.isClient) {
 				var formattedMilkCapacity = String.format("%.2f", getMilkAmount());
-				var milkMessage = Text.translatable("text.crop_growth_modifier.cow_milk_capacity",
-						formattedMilkCapacity);
+				var milkMessage = Text.translatable("text.crop_growth_modifier.cow_milk_capacity", formattedMilkCapacity);
 				player.sendMessage(milkMessage, true);
 			}
 
@@ -70,7 +69,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 	}
 
 	public default float getInitialRandomMilkAmount(Random random, CowEntity cowEntity) {
-		float maxInitialMilkAmount = Mod.config.cowMilkProductionCapacity * Mod.config.cowMilkInitialRandomFraction;
+		float maxInitialMilkAmount = Mod.CONFIG.cowMilkProductionCapacity * Mod.CONFIG.cowMilkInitialRandomFraction;
 		float initialMilkAmount = random.nextFloat() * maxInitialMilkAmount;
 
 		return initialMilkAmount;

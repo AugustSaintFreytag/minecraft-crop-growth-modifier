@@ -20,8 +20,7 @@ import net.saint.crop_growth_modifier.library.CowEntityMilkAccessor;
 
 public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 
-	public static final Identifier SYNC_PACKET_ID_MILK = new Identifier("crop_growth_modifier",
-			"cow_entity_milk_sync");
+	public static final Identifier SYNC_PACKET_ID_MILK = new Identifier("crop_growth_modifier", "cow_entity_milk_sync");
 
 	public static final String NBT_KEY_MILK = "MilkAmount";
 	public static final String NBT_KEY_MILK_LAST_PRODUCED = "MilkLastProductionTick";
@@ -84,7 +83,7 @@ public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 	// NBT
 
 	public default void writeNbt(CowEntity cowEntity, NbtCompound nbt) {
-		if (!Mod.config.cowLimitedMilkProduction) {
+		if (!Mod.CONFIG.cowLimitedMilkProduction) {
 			return;
 		}
 
@@ -93,7 +92,7 @@ public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 	}
 
 	public default void readNbt(CowEntity cowEntity, NbtCompound nbt) {
-		if (!Mod.config.cowLimitedMilkProduction) {
+		if (!Mod.CONFIG.cowLimitedMilkProduction) {
 			return;
 		}
 
@@ -111,11 +110,11 @@ public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 		var animalEntity = (AnimalEntity) (Object) this;
 		var random = world.getRandom();
 
-		var baseAnimalMultiplifer = 1 + random.nextFloat() * Mod.config.animalBreedingCooldownMultiplier;
-		var baseAnimalCooldown = (int) (Mod.config.animalBreedingCooldown * baseAnimalMultiplifer);
+		var baseAnimalMultiplifer = 1 + random.nextFloat() * Mod.CONFIG.animalBreedingCooldownMultiplier;
+		var baseAnimalCooldown = (int) (Mod.CONFIG.animalBreedingCooldown * baseAnimalMultiplifer);
 
-		var otherAnimalMultiplifer = 1 + random.nextFloat() * Mod.config.animalBreedingCooldownMultiplier;
-		var otherAnimalCooldown = (int) (Mod.config.animalBreedingCooldown * otherAnimalMultiplifer);
+		var otherAnimalMultiplifer = 1 + random.nextFloat() * Mod.CONFIG.animalBreedingCooldownMultiplier;
+		var otherAnimalCooldown = (int) (Mod.CONFIG.animalBreedingCooldown * otherAnimalMultiplifer);
 
 		animalEntity.setBreedingAge(baseAnimalCooldown);
 		other.setBreedingAge(otherAnimalCooldown);
@@ -124,7 +123,7 @@ public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 	public default void mobTick(CowEntity cowEntity) {
 		var world = cowEntity.getWorld();
 
-		if (!Mod.config.cowLimitedMilkProduction || world.isClient) {
+		if (!Mod.CONFIG.cowLimitedMilkProduction || world.isClient) {
 			return;
 		}
 
@@ -137,8 +136,7 @@ public interface AnimalEntityMixinLogic extends CowEntityMilkAccessor {
 		var milkProductionAmount = getMilkAmount();
 
 		setLastMilkProductionTime(time);
-		setMilkAmount(clamp(milkProductionAmount + Mod.config.cowMilkProductionPerHundredTicks, 0,
-				Mod.config.cowMilkProductionCapacity));
+		setMilkAmount(clamp(milkProductionAmount + Mod.CONFIG.cowMilkProductionPerHundredTicks, 0, Mod.CONFIG.cowMilkProductionCapacity));
 
 		sendMilkSyncPacketToClients(cowEntity);
 	}

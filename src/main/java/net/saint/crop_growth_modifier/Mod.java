@@ -12,11 +12,11 @@ public class Mod implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger("crop_growth_modifier");
 
-	public static ModConfig config;
+	public static ModConfig CONFIG;
 
 	@Override
 	public void onInitialize() {
 		AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
-		config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+		CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 	}
 }
