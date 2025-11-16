@@ -6,11 +6,10 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "crop_growth_modifier")
 public class ModConfig implements ConfigData {
-	@Comment("Chance for a random world tick to be forwarded to a crop block (percentage). Default: 1.0 (100%)")
-	public float cropTickChance = 1.0f;
+	// Crop Blocks
 
-	@Comment("Chance for an applied growth event to succeed and actually make the crop grow (e.g. bonemeal) (percentage). Default: 1.0 (100%)")
-	public float cropGrowthChance = 1.0f;
+	@Comment("Chance for a random world tick to be forwarded to a crop block (e.g. wheat, carrots). Default: 1.0 (100%)")
+	public float cropTickChance = 1.0f;
 
 	@Comment("Minimum number of stages a crop block grows when growth happens, default is vanilla. Default: 2")
 	public int cropGrowthStagesMin = 2;
@@ -18,14 +17,37 @@ public class ModConfig implements ConfigData {
 	@Comment("Maximum number of stages a crop block grows when growth happens, default is vanilla. Default: 5")
 	public int cropGrowthStagesMax = 5;
 
-	@Comment("Multiplier for the growth speed of stem-based blocks (e.g. pumpkins, melons) (0.5 = stem blocks grow half the speed of crops). Don't set higher than 1.0. Default: 1.0 (1x)")
-	public float stemBlockMultiplier = 1.0f;
+	@Comment("Enables affecting all crop block types by default. Can be disabled to only use blocks defined manually below. Default: true")
+	public boolean affectAllCropBlocks = true;
 
-	@Comment("Chance for an extra crop tick roll to happen. Extra rolls also follow the crop tick chance. Accelerates crop growth. Default: 0 (0%)")
-	public float cropExtraRollChance = 0f;
+	@Comment("Comma-separated set of block ids for crop blocks to be affected. (Example: 'minecraft:wheat, minecraft:beetroot')")
+	public String cropBlockIdentifiers = "";
 
-	@Comment("Maximum number of extra rolls that can be scheduled for a crop block from a single tick. Used to prevent infinite ticks for high chances. Default: 20")
-	public int cropExtraRollMax = 20;
+	// Stem Blocks
+
+	@Comment("Chance for a random world tick to be forwarded to a stem block (e.g. pumpkins, melons). Default: 1.0 (100%)")
+	public float stemBlockChance = 1.0f;
+
+	@Comment("Enables affecting all stem block types by default. Can be disabled to only use blocks defined manually below. Default: true")
+	public boolean affectAllStemBlocks = true;
+
+	@Comment("Comma-separated set of block ids for stem blocks to be affected. (Example: 'minecraft:melon_stem, minecraft:pumpkin_stem')")
+	public String stemBlockIdentifiers = "";
+
+	// Misc Blocks
+
+	@Comment("Chance for a random world tick to be forwarded to other growable blocks (e.g. sugar cane, cactus). Default: 1.0 (100%)")
+	public float miscBlockChance = 1.0f;
+
+	@Comment("Comma-separated set of block ids for other growable blocks to be affected. (Example: 'minecraft:sugar_cane, minecraft:cactus')")
+	public String miscBlockIdentifiers = "minecraft:sugar_cane, minecraft:cactus, minecraft:bamboo, minecraft:cocoa";
+
+	// Saplings
+
+	@Comment("Chance for a random world tick to be forwarded to sapling blocks. Default: 1.0 (100%)")
+	public float saplingBlockChance = 1.0f;
+
+	// Animals
 
 	@Comment("Cooldown for animal breeding (vanilla default: 6k ticks = 5 minutes). Default: 6000")
 	public int animalBreedingCooldown = 6000;
