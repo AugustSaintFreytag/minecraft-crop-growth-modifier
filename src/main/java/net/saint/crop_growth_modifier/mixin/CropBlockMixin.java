@@ -20,44 +20,26 @@ public abstract class CropBlockMixin implements CropBlockMixinLogic {
 
 	// Properties
 
-	private int scheduledExtraRolls = 0;
-
-	public int getScheduledExtraRolls() {
-		return scheduledExtraRolls;
-	}
-
-	public void setScheduledExtraRolls(int scheduledExtraRolls) {
-		this.scheduledExtraRolls = scheduledExtraRolls;
-	}
-
 	@Shadow
 	public abstract int getMaxAge();
 
 	// Logic
 
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void injectedRandomTick(BlockState state, ServerWorld world, BlockPos position, Random random,
-			CallbackInfo callbackInfo) {
+	private void cgm$mixin$randomTick(BlockState state, ServerWorld world, BlockPos position, Random random, CallbackInfo callbackInfo) {
 		var block = (CropBlock) (Object) this;
-		if (!shouldAllowRandomTick(block, state, world, position, random)) {
-			callbackInfo.cancel();
-			return;
-		}
-
-		scheduleExtraRolls(block, state, world, position, random);
+		cgm$randomTick(block, state, world, position, random, callbackInfo);
 	}
 
 	@Inject(method = "applyGrowth", at = @At("HEAD"), cancellable = true)
-	private void injectedApplyGrowth(World world, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
-		if (!shouldApplyGrowth(world, position, state)) {
-			callbackInfo.cancel();
-			return;
-		}
+	private void cgm$mixin$applyGrowth(World world, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
+		var block = (CropBlock) (Object) this;
+		cgm$applyGrowth(world, block, position, state, callbackInfo);
 	}
 
 	@Inject(method = "getGrowthAmount", at = @At("HEAD"), cancellable = true)
-	private void injectedGetGrowthAmount(World world, CallbackInfoReturnable<Integer> callbackInfo) {
-		var growthAmount = getGrowthAmountForAllowedEvent(world);
+	private void cgm$mixin$getGrowthAmount(World world, CallbackInfoReturnable<Integer> callbackInfo) {
+		var growthAmount = getGrowthAmountForAllowedEvent(world, getMaxAge());
 		callbackInfo.setReturnValue(growthAmount);
 	}
 
