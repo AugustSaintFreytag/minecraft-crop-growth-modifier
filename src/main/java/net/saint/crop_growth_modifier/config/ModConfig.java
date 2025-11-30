@@ -2,68 +2,86 @@ package net.saint.crop_growth_modifier.config;
 
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "crop_growth_modifier")
 public class ModConfig implements ConfigData {
 	// Crop Blocks
 
+	@ConfigEntry.Category("crops")
 	@Comment("Chance for a random world tick to be forwarded to a crop block (e.g. wheat, carrots). Default: 1.0 (100%)")
 	public float cropTickChance = 1.0f;
 
+	@ConfigEntry.Category("crops")
 	@Comment("Minimum number of stages a crop block grows when growth happens, default is vanilla. Default: 2")
 	public int cropGrowthStagesMin = 2;
 
+	@ConfigEntry.Category("crops")
 	@Comment("Maximum number of stages a crop block grows when growth happens, default is vanilla. Default: 5")
 	public int cropGrowthStagesMax = 5;
 
+	@ConfigEntry.Category("crops")
 	@Comment("Enables affecting all crop block types by default. Can be disabled to only use blocks defined manually below. Default: true")
 	public boolean affectAllCropBlocks = true;
 
+	@ConfigEntry.Category("crops")
 	@Comment("Comma-separated set of block ids for crop blocks to be affected. (Example: 'minecraft:wheat, minecraft:beetroot')")
 	public String cropBlockIdentifiers = "";
 
 	// Stem Blocks
 
+	@ConfigEntry.Category("stems")
 	@Comment("Chance for a random world tick to be forwarded to a stem block (e.g. pumpkins, melons). Default: 1.0 (100%)")
-	public float stemBlockChance = 1.0f;
+	public float stemTickChance = 1.0f;
 
+	@ConfigEntry.Category("stems")
 	@Comment("Enables affecting all stem block types by default. Can be disabled to only use blocks defined manually below. Default: true")
 	public boolean affectAllStemBlocks = true;
 
+	@ConfigEntry.Category("stems")
 	@Comment("Comma-separated set of block ids for stem blocks to be affected. (Example: 'minecraft:melon_stem, minecraft:pumpkin_stem')")
 	public String stemBlockIdentifiers = "";
 
 	// Misc Blocks
 
+	@ConfigEntry.Category("misc")
 	@Comment("Chance for a random world tick to be forwarded to other growable blocks (e.g. sugar cane, cactus). Default: 1.0 (100%)")
-	public float miscBlockChance = 1.0f;
+	public float miscTickChance = 1.0f;
 
+	@ConfigEntry.Category("misc")
 	@Comment("Comma-separated set of block ids for other growable blocks to be affected. (Example: 'minecraft:sugar_cane, minecraft:cactus')")
 	public String miscBlockIdentifiers = "minecraft:sugar_cane, minecraft:cactus, minecraft:bamboo, minecraft:cocoa";
 
 	// Saplings
 
+	@ConfigEntry.Category("saplings")
 	@Comment("Chance for a random world tick to be forwarded to sapling blocks. Default: 1.0 (100%)")
-	public float saplingBlockChance = 1.0f;
+	public float saplingTickChance = 1.0f;
 
 	// Animals
 
+	@ConfigEntry.Category("animals")
 	@Comment("Cooldown for animal breeding (vanilla default: 6k ticks = 5 minutes). Default: 6000")
 	public int animalBreedingCooldown = 6000;
 
+	@ConfigEntry.Category("animals")
 	@Comment("Rolled extra multiplier for applied cooldown for animal breeding (1.0 = x1, 2.0 = between 1x and 2x is applied, lower base cooldown for wider range). Default: 0")
 	public float animalBreedingCooldownMultiplier = 1f;
 
+	@ConfigEntry.Category("animals")
 	@Comment("Enable limited milk production for cows. Default: false")
 	public boolean cowLimitedMilkProduction = false;
 
+	@ConfigEntry.Category("animals")
 	@Comment("Rate for cows to produce buckets of milk per 100 ticks (5 seconds). 1.0f = 1 bucket. Cows may hold more than one bucket. Formula for time calculation in minutes: (1 / <rate value> * (100/20)) / 60. Default: 0.00825 (approx. 10 minutes)")
 	public float cowMilkProductionPerHundredTicks = 0.00825f;
 
+	@ConfigEntry.Category("animals")
 	@Comment("Maximum amount of milk a cow can hold in buckets. Default: 2.0 buckets")
 	public float cowMilkProductionCapacity = 2.0f;
 
+	@ConfigEntry.Category("animals")
 	@Comment("Maximum amount of milk a cow can initially get randomly set to. Default: 0.5 (50%)")
 	public float cowMilkInitialRandomFraction = 0.5f;
 }
