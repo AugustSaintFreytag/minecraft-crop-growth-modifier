@@ -26,19 +26,19 @@ public abstract class CropBlockMixin implements CropBlockMixinLogic {
 	// Logic
 
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void cgm$mixin$randomTick(BlockState state, ServerWorld world, BlockPos position, Random random, CallbackInfo callbackInfo) {
+	private void cgm$randomTick(BlockState state, ServerWorld world, BlockPos position, Random random, CallbackInfo callbackInfo) {
 		var block = (CropBlock) (Object) this;
-		cgm$randomTick(block, state, world, position, random, callbackInfo);
+		cgm$$randomTick(block, state, world, position, random, callbackInfo);
 	}
 
 	@Inject(method = "applyGrowth", at = @At("HEAD"), cancellable = true)
-	private void cgm$mixin$applyGrowth(World world, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
+	private void cgm$applyGrowth(World world, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
 		var block = (CropBlock) (Object) this;
-		cgm$applyGrowth(world, block, position, state, callbackInfo);
+		cgm$$applyGrowth(world, block, position, state, callbackInfo);
 	}
 
 	@Inject(method = "getGrowthAmount", at = @At("HEAD"), cancellable = true)
-	private void cgm$mixin$getGrowthAmount(World world, CallbackInfoReturnable<Integer> callbackInfo) {
+	private void cgm$getGrowthAmount(World world, CallbackInfoReturnable<Integer> callbackInfo) {
 		var growthAmount = getGrowthAmountForAllowedEvent(world, getMaxAge());
 		callbackInfo.setReturnValue(growthAmount);
 	}

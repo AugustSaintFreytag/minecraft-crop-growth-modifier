@@ -2,12 +2,12 @@ package net.saint.crop_growth_modifier.library;
 
 public interface CowEntityMilkAccessor {
 
-	public float getMilkAmount();
+	public float cgm$getMilkAmount();
 
-	public void setMilkAmount(float milkProductionAmount);
+	public void cgm$setMilkAmount(float milkProductionAmount);
 
-	public long getLastMilkProductionTime();
+	public long cgm$getLastMilkProductionTime();
 
-	public void setLastMilkProductionTime(long lastMilkProductionTime);
+	public void cgm$setLastMilkProductionTime(long lastMilkProductionTime);
 
 }

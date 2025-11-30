@@ -19,15 +19,15 @@ public interface GrowableBlockMixinLogic {
 	}
 
 	public default boolean shouldAllowRandomTickForStem(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		return shouldAllowRandomTick(random, Mod.CONFIG.stemBlockChance * Mod.CONFIG.cropTickChance);
+		return shouldAllowRandomTick(random, Mod.CONFIG.stemTickChance);
 	}
 
 	public default boolean shouldAllowRandomTickForMisc(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		return shouldAllowRandomTick(random, Mod.CONFIG.miscBlockChance * Mod.CONFIG.cropTickChance);
+		return shouldAllowRandomTick(random, Mod.CONFIG.miscTickChance);
 	}
 
 	public default boolean shouldAllowRandomTickForSapling(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		return shouldAllowRandomTick(random, Mod.CONFIG.saplingBlockChance * Mod.CONFIG.cropTickChance);
+		return shouldAllowRandomTick(random, Mod.CONFIG.saplingTickChance);
 	}
 
 	private boolean shouldAllowRandomTick(Random random, float chance) {

@@ -11,14 +11,14 @@ import net.minecraft.world.World;
 
 public interface CropBlockMixinLogic extends GrowableBlockMixinLogic {
 
-	public default void cgm$randomTick(CropBlock block, BlockState state, ServerWorld world, BlockPos position, Random random,
+	public default void cgm$$randomTick(CropBlock block, BlockState state, ServerWorld world, BlockPos position, Random random,
 			CallbackInfo callbackInfo) {
 		if (!shouldAllowRandomTickForCrop(block, state, world, position, random)) {
 			callbackInfo.cancel();
 		}
 	}
 
-	public default void cgm$applyGrowth(World world, CropBlock block, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
+	public default void cgm$$applyGrowth(World world, CropBlock block, BlockPos position, BlockState state, CallbackInfo callbackInfo) {
 		if (!shouldApplyGrowth(world, position, state)) {
 			callbackInfo.cancel();
 			return;

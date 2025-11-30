@@ -21,25 +21,28 @@ public abstract class CowEntityMixin implements CowEntityMixinLogic {
 	// Properties
 
 	private float milkAmount = 0;
+
 	private long lastMilkProductionTime = 0;
 
+	// Access
+
 	@Unique
-	public float getMilkAmount() {
+	public float cgm$getMilkAmount() {
 		return milkAmount;
 	}
 
 	@Unique
-	public void setMilkAmount(float milkProductionAmount) {
+	public void cgm$setMilkAmount(float milkProductionAmount) {
 		this.milkAmount = milkProductionAmount;
 	}
 
 	@Unique
-	public long getLastMilkProductionTime() {
+	public long cgm$getLastMilkProductionTime() {
 		return lastMilkProductionTime;
 	}
 
 	@Unique
-	public void setLastMilkProductionTime(long lastMilkProductionTime) {
+	public void cgm$setLastMilkProductionTime(long lastMilkProductionTime) {
 		this.lastMilkProductionTime = lastMilkProductionTime;
 	}
 
@@ -53,19 +56,18 @@ public abstract class CowEntityMixin implements CowEntityMixinLogic {
 		}
 
 		var cowEntity = (CowEntity) (Object) this;
-		var initialMilkAmount = getInitialRandomMilkAmount(cowEntity.getRandom(), cowEntity);
+		var initialMilkAmount = cgm$getInitialRandomMilkAmount(cowEntity.getRandom(), cowEntity);
 
-		setMilkAmount(initialMilkAmount);
+		cgm$setMilkAmount(initialMilkAmount);
 	}
 
 	// Logic
 
 	@Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
-	private void injectedInteractMob(PlayerEntity player, Hand hand,
-			CallbackInfoReturnable<ActionResult> callbackInfo) {
+	private void cgm$interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> callbackInfo) {
 		var cowEntity = (CowEntity) (Object) this;
 		var world = cowEntity.getWorld();
-		var result = onInteractMob(cowEntity, player, hand);
+		var result = cgm$$interactMob(cowEntity, player, hand);
 
 		switch (result) {
 			case DidMilk:

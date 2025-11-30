@@ -16,7 +16,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 
 	// Logic
 
-	public default CowEntityMilkActionResult onInteractMob(CowEntity cowEntity, PlayerEntity player, Hand hand) {
+	public default CowEntityMilkActionResult cgm$$interactMob(CowEntity cowEntity, PlayerEntity player, Hand hand) {
 		if (!Mod.CONFIG.cowLimitedMilkProduction) {
 			return CowEntityMilkActionResult.DidNothing;
 		}
@@ -30,7 +30,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 
 		if (player.getStackInHand(hand).isEmpty() && player.isSneaking()) {
 			if (!world.isClient) {
-				var formattedMilkCapacity = String.format("%.2f", getMilkAmount());
+				var formattedMilkCapacity = String.format("%.2f", cgm$getMilkAmount());
 				var milkMessage = Text.translatable("text.crop_growth_modifier.cow_milk_capacity", formattedMilkCapacity);
 				player.sendMessage(milkMessage, true);
 			}
@@ -42,7 +42,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 			return CowEntityMilkActionResult.DidNothing;
 		}
 
-		var milkProductionAmount = getMilkAmount();
+		var milkProductionAmount = cgm$getMilkAmount();
 
 		if (milkProductionAmount < 1.0f) {
 			if (!world.isClient) {
@@ -58,7 +58,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 		// play.
 
 		if (world.isClient) {
-			setMilkAmount(milkProductionAmount - 1.0f);
+			cgm$setMilkAmount(milkProductionAmount - 1.0f);
 			player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
 		}
 
@@ -68,7 +68,7 @@ public interface CowEntityMixinLogic extends CowEntityMilkAccessor {
 		return CowEntityMilkActionResult.DidMilk;
 	}
 
-	public default float getInitialRandomMilkAmount(Random random, CowEntity cowEntity) {
+	public default float cgm$getInitialRandomMilkAmount(Random random, CowEntity cowEntity) {
 		float maxInitialMilkAmount = Mod.CONFIG.cowMilkProductionCapacity * Mod.CONFIG.cowMilkInitialRandomFraction;
 		float initialMilkAmount = random.nextFloat() * maxInitialMilkAmount;
 
