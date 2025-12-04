@@ -8,59 +8,47 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import net.minecraft.world.tick.OrderedTick;
 import net.saint.crop_growth_modifier.Mod;
 
 public interface GrowableBlockMixinLogic {
 
-	public int getScheduledExtraRolls();
+	// Ticking
 
-	public void setScheduledExtraRolls(int scheduledExtraRolls);
-
-	public default int getMaxAge() {
-		return 1;
+	public default boolean shouldAllowRandomTickForCrop(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		return shouldAllowRandomTick(random, Mod.CONFIG.cropTickChance);
 	}
 
-	public default boolean shouldAllowRandomTick(Block block, BlockState state, ServerWorld world, BlockPos pos,
-			Random random) {
+	public default boolean shouldAllowRandomTickForStem(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		return shouldAllowRandomTick(random, Mod.CONFIG.stemTickChance);
+	}
+
+	public default boolean shouldAllowRandomTickForMisc(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		return shouldAllowRandomTick(random, Mod.CONFIG.miscTickChance);
+	}
+
+	public default boolean shouldAllowRandomTickForSapling(Block block, BlockState state, ServerWorld world, BlockPos pos, Random random) {
+		return shouldAllowRandomTick(random, Mod.CONFIG.saplingTickChance);
+	}
+
+	private boolean shouldAllowRandomTick(Random random, float chance) {
 		var randomValue = random.nextFloat();
 
-		if (randomValue > Mod.config.cropTickChance) {
+		if (randomValue > chance) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public default void scheduleExtraRolls(Block block, BlockState state, ServerWorld world, BlockPos pos,
-			Random random) {
-		if (random.nextFloat() <= Mod.config.cropExtraRollChance) {
-			var scheduledExtraRolls = getScheduledExtraRolls();
-
-			if (scheduledExtraRolls >= Mod.config.cropExtraRollMax) {
-				setScheduledExtraRolls(0);
-				return;
-			}
-
-			setScheduledExtraRolls(scheduledExtraRolls + 1);
-
-			// Schedule extra random tick for block.
-			OrderedTick<Block> extraBlockTick = OrderedTick.create(block, pos);
-			world.getBlockTickScheduler().scheduleTick(extraBlockTick);
-
-			return;
-		}
-
-		setScheduledExtraRolls(0);
-	}
+	// Growth
 
 	public default boolean shouldApplyGrowth(World world, BlockPos pos, BlockState state) {
-		return world.random.nextFloat() < Mod.config.cropTickChance;
+		return world.random.nextFloat() < Mod.CONFIG.cropTickChance;
 	}
 
-	public default int getGrowthAmountForAllowedEvent(World world) {
-		var growthMin = clamp(Mod.config.cropGrowthStagesMin, 1, getMaxAge());
-		var growthMax = clamp(Mod.config.cropGrowthStagesMax, growthMin + 1, getMaxAge() + 1);
+	public default int getGrowthAmountForAllowedEvent(World world, int maxAge) {
+		var growthMin = clamp(Mod.CONFIG.cropGrowthStagesMin, 1, maxAge);
+		var growthMax = clamp(Mod.CONFIG.cropGrowthStagesMax, growthMin + 1, maxAge + 1);
 
 		return world.random.nextBetween(growthMin, growthMax);
 	}

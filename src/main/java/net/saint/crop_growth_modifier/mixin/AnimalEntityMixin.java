@@ -22,87 +22,67 @@ public class AnimalEntityMixin implements AnimalEntityMixinLogic {
 
 	// Properties
 
-	public float getMilkAmount() {
+	public float cgm$getMilkAmount() {
 		return returnWithCowEntityMilkAccess(cowEntity -> {
-			return cowEntity.getMilkAmount();
+			return cowEntity.cgm$getMilkAmount();
 		}, 0f);
 	}
 
-	public void setMilkAmount(float milkAmount) {
+	public void cgm$setMilkAmount(float milkAmount) {
 		withCowEntityMilkAccess(cowEntity -> {
-			cowEntity.setMilkAmount(milkAmount);
+			cowEntity.cgm$setMilkAmount(milkAmount);
 		});
 	}
 
-	public long getLastMilkProductionTime() {
+	public long cgm$getLastMilkProductionTime() {
 		return returnWithCowEntityMilkAccess(cowEntity -> {
-			return cowEntity.getLastMilkProductionTime();
+			return cowEntity.cgm$getLastMilkProductionTime();
 		}, 0L);
 	}
 
-	public void setLastMilkProductionTime(long lastMilkProductionTime) {
+	public void cgm$setLastMilkProductionTime(long lastMilkProductionTime) {
 		withCowEntityMilkAccess(cowEntity -> {
-			cowEntity.setLastMilkProductionTime(lastMilkProductionTime);
+			cowEntity.cgm$setLastMilkProductionTime(lastMilkProductionTime);
 		});
 	}
 
 	// Init
 
 	@Inject(method = "<init>", at = @At("TAIL"))
-	public void injectedAnimalEntity(CallbackInfo callbackInfo) {
-		initClientNetworking();
+	public void cgm$init(CallbackInfo callbackInfo) {
+		cgm$initClientNetworking();
 	}
 
 	// NBT
 
 	@Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-	public void injectedWriteCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+	public void cgm$writeCustomDataToNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		withCowEntity(cowEntity -> {
-			writeNbt(cowEntity, nbt);
+			cgm$writeNbt(cowEntity, nbt);
 		});
 	}
 
 	@Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-	public void injectedReadCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
+	public void cgm$readCustomDataFromNbt(NbtCompound nbt, CallbackInfo callbackInfo) {
 		withCowEntity(cowEntity -> {
-			readNbt(cowEntity, nbt);
+			cgm$readNbt(cowEntity, nbt);
 		});
 	}
 
 	// Tick
 
 	@Inject(method = "mobTick", at = @At("TAIL"))
-	private void injectedMobTick(CallbackInfo callbackInfo) {
+	private void cgm$mobTick(CallbackInfo callbackInfo) {
 		withCowEntity(cowEntity -> {
-			mobTick(cowEntity);
+			cgm$mobTick(cowEntity);
 		});
 	}
-
-	// @Inject(method = "interactMob", at = @At("HEAD"), cancellable = true)
-	// private void injectedInteractMob(PlayerEntity player, Hand hand,
-	// CallbackInfoReturnable<ActionResult> callbackInfo) {
-	// var animal = (AnimalEntity) (Object) this;
-	// var world = animal.getWorld();
-	// var itemStack = player.getStackInHand(hand);
-
-	// if (animal.isBreedingItem(itemStack)) {
-	// int breedingAge = animal.getBreedingAge();
-	// if (!world.isClient && breedingAge == 0 && animal.canEat()) {
-	// if (world.getRandom().nextFloat() > Mod.config.animalBreedingChance) {
-	// // Breeding chance roll failed, consume food and proceed.
-	// this.eat(player, hand, itemStack);
-	// callbackInfo.setReturnValue(ActionResult.CONSUME);
-	// }
-	// }
-	// }
-	// }
 
 	// Breeding
 
 	@Inject(method = "breed(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/passive/AnimalEntity;Lnet/minecraft/entity/passive/PassiveEntity;)V", at = @At("HEAD"))
-	private void injectedBreedWithBaby(ServerWorld world, AnimalEntity other, @Nullable PassiveEntity baby,
-			CallbackInfo callbackInfo) {
-		breedWithBaby(world, other, baby);
+	private void cgm$breed(ServerWorld world, AnimalEntity other, @Nullable PassiveEntity baby, CallbackInfo callbackInfo) {
+		cgm$breedWithBaby(world, other, baby);
 	}
 
 	// Convenience Access
