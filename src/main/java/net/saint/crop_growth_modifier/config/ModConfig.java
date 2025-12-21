@@ -51,7 +51,7 @@ public class ModConfig implements ConfigData {
 
 	@ConfigEntry.Category("misc")
 	@Comment("Comma-separated set of block ids for other growable blocks to be affected. (Example: 'minecraft:sugar_cane, minecraft:cactus')")
-	public String miscBlockIdentifiers = "minecraft:sugar_cane, minecraft:cactus, minecraft:bamboo, minecraft:cocoa";
+	public String miscBlockIdentifiers = "minecraft:sugar_cane, minecraft:cactus, minecraft:bamboo, minecraft:cocoa, create_bic_bit:unripe_cheese, create_bic_bit:young_cheese, create_bic_bit:aged_cheese";
 
 	// Saplings
 
